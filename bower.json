@@ -1,0 +1,19 @@
+{
+  "name": "kaiju",
+  "version": "0.0.0",
+  "authors": [
+    "Adrian Gaudebert <adrian@gaudebert.fr>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ensy": "~1.0.0"
+  }
+}
