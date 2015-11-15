@@ -11,21 +11,40 @@
         }
     });
 
+    var requestFullscreen = function (elem) {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        }
+    };
+
     require([
         'pixi',
         'manager-singleton',
 
         'const',
 
+        'components/card',
+        'components/human-card',
+
         'components/board',
         'components/click',
+        'components/deck',
         'components/event',
         'components/game-state',
         'components/human',
         'components/kaiju',
+        'components/player',
+        'components/player-head',
         'components/position',
         'components/sprite',
         'components/text',
+        'components/tile',
 
         'processors/action',
         'processors/game-gui',
@@ -40,15 +59,22 @@
 
         Const,
 
+        CardComp,
+        HumanCardComp,
+
         BoardComp,
         ClickComp,
+        DeckComp,
         EventComp,
         GameStateComp,
         HumanComp,
         KaijuComp,
+        PlayerComp,
+        PlayerHeadComp,
         PositionComp,
         SpriteComp,
         TextComp,
+        TileComp,
 
         ActionProcessor,
         GameGUIProcessor,
@@ -63,21 +89,30 @@
             Const.SCREEN.H,
             {backgroundColor: 0x000000}
         );
-        document.getElementById('stage').appendChild(renderer.view);
+        var container = document.getElementById('stage');
+        container.appendChild(renderer.view);
+
+        // requestFullscreen(container);
 
         var stage = new PIXI.Container();
 
         // Add all components.
         var components = [
+            CardComp,
+            HumanCardComp,
             BoardComp,
             ClickComp,
+            DeckComp,
             EventComp,
             GameStateComp,
             KaijuComp,
             HumanComp,
+            PlayerComp,
+            PlayerHeadComp,
             PositionComp,
             SpriteComp,
             TextComp,
+            TileComp,
         ];
         for (var i = 0; i < components.length; i++) {
             entityManager.addComponent(components[i].name, components[i])

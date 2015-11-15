@@ -36,8 +36,8 @@ define(['pixi'], function (PIXI) {
         var text = new PIXI.Text(
             data.text,
             {
-                font: '40px Arial',
-                fill: 'white',
+                font: data.size + ' ' + data.font,
+                fill: data.color,
                 align: 'center',
             }
         );
@@ -63,12 +63,13 @@ define(['pixi'], function (PIXI) {
                 continue;
             }
 
-            // First create the actual Phaser.Sprite object if it doesn't exist yet.
+            // First create the actual PIXI.Sprite object if it doesn't exist yet.
             if (!this.sprites[entity]) {
                 this.createSprite(entity, displayables[entity]);
             }
 
             var sprite = this.sprites[entity];
+            sprite.visible = displayables[entity].visible;
 
             // Then update the position of each sprite.
             var positionData = this.manager.getComponentDataForEntity('Position', entity);
@@ -81,7 +82,7 @@ define(['pixi'], function (PIXI) {
         for (entity in texts) {
             var t = texts[entity];
 
-            // First create the actual Phaser.Text object if it doesn't exist yet.
+            // First create the actual PIXI.Text object if it doesn't exist yet.
             if (!this.sprites[entity]) {
                 this.createText(entity, t);
             }
@@ -89,6 +90,10 @@ define(['pixi'], function (PIXI) {
             var text = this.sprites[entity];
 
             text.text = t.text;
+            text.setStyle({
+                font: t.size + ' ' + t.font,
+                fill: t.color,
+            })
 
             // Then update the position of each sprite.
             var positionData = this.manager.getComponentDataForEntity('Position', entity);

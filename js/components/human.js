@@ -1,6 +1,8 @@
 define({
     name: 'Human',
     state: {
-        number: 0,
+        vehicleCard: null,
+        weaponCard: null,
+        movementCard: null,
     }
 });

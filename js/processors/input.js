@@ -52,7 +52,7 @@ define(['const'], function (Const) {
             }
             else {
                 this.manager.updateComponentDataForEntity('Event', newEvent, {
-                    target: 'ui',
+                    target: 'gui',
                 });
             }
 

@@ -13,6 +13,6 @@ define({
     CELL_SIZE: 80,
     CELLS_PER_TILE: 3,
 
-    TURN_TIME: 2000,
+    TURN_TIME: 20000,
     PLAYERS_NUMBER: 3,
 });
