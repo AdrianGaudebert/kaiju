@@ -1,0 +1,16 @@
+body {
+    background-color: #888888;
+    margin: 0;
+    padding: 0;
+    font-family: retroComputerDemo;
+}
+
+/*#stage {
+    margin: auto;
+    width: 720px;
+}*/
+
+@font-face {
+    font-family: retroComputerDemo;
+    src: url(../assets/fonts/retro_computer_demo.ttf);
+}
