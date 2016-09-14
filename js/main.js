@@ -84,17 +84,7 @@
 
         GameState
     ) {
-        var renderer = PIXI.autoDetectRenderer(
-            Const.SCREEN.W,
-            Const.SCREEN.H,
-            {backgroundColor: 0x000000}
-        );
         var container = document.getElementById('stage');
-        container.appendChild(renderer.view);
-
-        // requestFullscreen(container);
-
-        var stage = new PIXI.Container();
 
         // Add all components.
         var components = [
@@ -118,12 +108,20 @@
             entityManager.addComponent(components[i].name, components[i])
         };
 
+        var renderingProc = new RenderingProcessor(
+            entityManager,
+            container,
+            Const.SCREEN.W,
+            Const.SCREEN.H,
+            {backgroundColor: 0x000000}
+        );
+
         // Add all processors.
-        entityManager.addProcessor(new InputProcessor(entityManager));
+        entityManager.addProcessor(new InputProcessor(entityManager, container));
         entityManager.addProcessor(new ActionProcessor(entityManager));
         entityManager.addProcessor(new TurnProcessor(entityManager));
         entityManager.addProcessor(new GameGUIProcessor(entityManager));
-        entityManager.addProcessor(new RenderingProcessor(entityManager, stage));
+        entityManager.addProcessor(renderingProc);
 
         var game = new GameState();
         game.start();
@@ -137,7 +135,6 @@
             timerPrev = now;
 
             entityManager.update(dt);
-            renderer.render(stage);
 
             requestAnimationFrame(animate);
         }

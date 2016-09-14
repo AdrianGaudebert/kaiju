@@ -3,11 +3,13 @@ define(['pixi'], function (PIXI) {
     /**
      * A processor that takes care of all things related to displaying the game.
      */
-    var RenderingProcessor = function (manager, stage) {
+    var RenderingProcessor = function (manager, containerElt, stageWidth, stageHeight, PIXIOptions) {
         this.manager = manager;
 
-        this.container = new PIXI.DisplayObjectContainer();
-        stage.addChild(this.container);
+        this.renderer = PIXI.autoDetectRenderer(stageWidth, stageHeight, PIXIOptions);
+        containerElt.appendChild(this.renderer.view);
+
+        this.stage = new PIXI.Container();
 
         // An associative array for entities' sprites.
         // entity id -> sprite
@@ -25,7 +27,7 @@ define(['pixi'], function (PIXI) {
         sprite.anchor.x = 0.5;
         sprite.anchor.y = 0.5;
 
-        this.container.addChild(sprite);
+        this.stage.addChild(sprite);
 
         this.sprites[entity] = sprite;
     };
@@ -47,7 +49,7 @@ define(['pixi'], function (PIXI) {
         text.anchor.x = 0.5;
         text.anchor.y = 0.5;
 
-        this.container.addChild(text);
+        this.stage.addChild(text);
 
         this.sprites[entity] = text;
     };
@@ -90,16 +92,16 @@ define(['pixi'], function (PIXI) {
             var text = this.sprites[entity];
 
             text.text = t.text;
-            text.setStyle({
-                font: t.size + ' ' + t.font,
-                fill: t.color,
-            })
+            text.style.font = t.size + ' ' + t.font;
+            text.style.fill = t.color;
 
             // Then update the position of each sprite.
             var positionData = this.manager.getComponentDataForEntity('Position', entity);
             text.x = positionData.x;
             text.y = positionData.y;
         }
+
+        this.renderer.render(this.stage);
     };
 
     return RenderingProcessor;

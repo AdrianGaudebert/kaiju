@@ -2,14 +2,15 @@ define(['const'], function (Const) {
     /**
      * A processor that takes care of all things related to handling user inputs.
      */
-    var InputProcessor = function (manager) {
+    var InputProcessor = function (manager, container) {
         this.manager = manager;
+        this.container = container;
 
         this.initEvents();
     };
 
     InputProcessor.prototype.initEvents = function () {
-        var target = document.getElementById('stage').firstElementChild;
+        var target = this.container.firstElementChild;
         target.addEventListener('mousedown', this.clickEvent.bind(this));
         target.addEventListener('touchstart', this.clickEvent.bind(this));
     };
